@@ -5,7 +5,7 @@ from ayon_server.addons import BaseServerAddon
 from .settings import MySettings, DEFAULT_VALUES
 
 
-class MyAddon(BaseServerAddon):
+class BuildWorkfileAddon(BaseServerAddon):
     settings_model: Type[MySettings] = MySettings
 
     async def get_default_settings(self):
