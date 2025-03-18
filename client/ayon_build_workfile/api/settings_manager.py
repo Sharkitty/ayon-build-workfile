@@ -7,25 +7,37 @@ def get_server_settings() -> dict:
     pass
 
 
-def get_default_settings() -> dict:
+def get_default_settings(server_settings: dict = None) -> dict:
     """Get default settings from server.
+
+    Args:
+        server_settings (dict): Server settings (optional). Defaults to None.
 
     Returns:
         dict: Default settings.
     """
-    pass
+    if not server_settings:
+        server_settings = get_server_settings()
+
+    # TODO
 
 
-def get_settings_exceptions() -> dict:
+def get_settings_exceptions(server_settings: dict = None) -> dict:
     """Get settings exceptions from server.
+
+    Args:
+        server_settings (dict): Server settings (optional). Defaults to None.
 
     Returns:
         dict: Settings exceptions.
     """
-    pass
+    if not server_settings:
+        server_settings = get_server_settings()
+
+    # TODO
 
 
-def get_settings_override() -> dict:
+def get_settings_overrides() -> dict:
     """Get settings local overrides.
 
     Returns:
@@ -37,7 +49,10 @@ def get_settings_override() -> dict:
 # Not sure about this function name.
 # Needs to be product specific?
 def get_applied_settings(
-    allow_exceptions: bool = True, allow_overrides: bool = True
+    allow_exceptions: bool = True,
+    allow_overrides: bool = True,
+    server_settings: dict = None,
+    settings_overrides: dict = None,
 ) -> dict:
     """Get settings after applying settings exceptions and settings overrides.
 
@@ -52,8 +67,17 @@ def get_applied_settings(
             Defaults to True.
         allow_overrides (bool): Applies settings overrides if True.
             Defaults to True.
+        server_settings (dict): Server settings (optional). Defaults to None.
+        settings_overrides (dict): Settings overrides (optional).
+            Defaults to None.
 
     Returns:
         dict: Applied settings.
     """
-    pass
+    if not server_settings:
+        server_settings = get_server_settings()
+
+    if not settings_overrides:
+        settings_overrides = get_settings_overrides()
+
+    # TODO
