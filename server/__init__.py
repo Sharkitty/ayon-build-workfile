@@ -2,11 +2,11 @@ from typing import Type
 
 from ayon_server.addons import BaseServerAddon
 
-from .settings import MySettings, DEFAULT_VALUES
+from .settings import BuildWorkfileSettings, DEFAULT_VALUES
 
 
 class BuildWorkfileAddon(BaseServerAddon):
-    settings_model: Type[MySettings] = MySettings
+    settings_model: Type[BuildWorkfileSettings] = BuildWorkfileSettings
 
     async def get_default_settings(self):
         settings_model_cls = self.get_settings_model()
