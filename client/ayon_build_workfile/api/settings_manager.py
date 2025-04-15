@@ -7,14 +7,14 @@ def get_server_settings() -> dict:
     pass
 
 
-def get_default_settings(server_settings: dict = None) -> dict:
-    """Get default settings from server.
+def get_main_settings(server_settings: dict = None) -> dict:
+    """Get main settings from server.
 
     Args:
         server_settings (dict): Server settings (optional). Defaults to None.
 
     Returns:
-        dict: Default settings.
+        dict: Main settings.
     """
     if not server_settings:
         server_settings = get_server_settings()
@@ -57,7 +57,7 @@ def get_applied_settings(
     """Get settings after applying settings exceptions and settings overrides.
 
     This goes as follows:
-    - Default settings are fetched.
+    - Main settings are fetched.
     - Settings exceptions are used to update the settings dict.
     - Settings overrides are used to update the settings dict.
     - The resulting dict is returned.

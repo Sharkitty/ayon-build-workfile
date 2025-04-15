@@ -1,7 +1,7 @@
 from ayon_server.settings import BaseSettingsModel, SettingsField
 
 
-class DefaultSettingsModel(BaseSettingsModel):
+class MainSettingsModel(BaseSettingsModel):
     execute_synchronously: bool = SettingsField(
         False, title="Execute Synchronously"
     )
@@ -24,8 +24,8 @@ class SettingsExceptionsModel(BaseSettingsModel):
 
 
 class BuildWorkfileSettings(BaseSettingsModel):
-    default_settings: DefaultSettingsModel = SettingsField(
-        title="Default Settings", default_factory=DefaultSettingsModel
+    main_settings: MainSettingsModel = SettingsField(
+        title="Main Settings", default_factory=MainSettingsModel
     )
 
     settings_exceptions: list[SettingsExceptionsModel] = SettingsField(
@@ -34,6 +34,6 @@ class BuildWorkfileSettings(BaseSettingsModel):
 
 
 DEFAULT_VALUES = {
-    "default_settings": None,
+    "main_settings": None,
     "settings_exceptions": None,
 }
