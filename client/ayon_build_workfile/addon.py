@@ -1,6 +1,7 @@
 import asyncio
 
 from ayon_core.addon import AYONAddon
+from ayon_core.pipeline.context_tools import get_current_context
 
 from .version import __version__
 from .api.casting_manager import get_casting
@@ -28,9 +29,10 @@ class BuildWorkfileAddon(AYONAddon):
         Args:
             local_overrides (dict): Local settings overrides. Defaults to None.
         """
+        context = get_current_context()
+
         # Resolve casting
-        # TODO get asset name
-        casting = get_casting(asset_name)
+        casting = get_casting(context)
 
         server_settings = get_server_settings()
 
@@ -39,3 +41,6 @@ class BuildWorkfileAddon(AYONAddon):
         applied_settings = get_applied_settings(
             server_settings, local_overrides
         )
+
+        for actor in casting:
+            actor.build(context)

@@ -4,8 +4,10 @@ from .actor import Actor
 from .server_settings import get_server_settings, get_settings_overrides
 
 
-def get_casting(asset_name: str) -> dict:
+# TODO separate get current casting and get asset casting (where you can choose the asset)
+def get_casting(context: dict) -> dict:
     # TODO get entity id
+    # TODO use folder instead of id
     entity_id = "TODO"
 
     entity = gazu.get_entity(entity_id)

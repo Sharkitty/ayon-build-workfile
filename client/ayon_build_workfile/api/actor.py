@@ -1,10 +1,14 @@
-from .server_settings import get_main_settings, get_settings_exceptions
+from .settings_manager import (
+    get_server_settings,
+    get_main_settings,
+    get_settings_exceptions,
+)
 
 class Actor:
     product_name: string = None
     product_type: string = None
     # Or loader class?
-    loader: string = None
+    loader: type = None
     # type: reference to a product
     product_reference = None
 
@@ -61,5 +65,10 @@ class Actor:
 
         self.product_reference = product_reference
 
-    def build():
-        pass
+    def build(context):
+        if product_reference:
+            # switch product
+            pass
+        else:
+            # load product
+            self.loader.load(context)
