@@ -1,27 +1,33 @@
 import gazu
+from ayon_api import get_folder_by_path
+from ayon_core.pipeline.context_tools import (
+    get_current_folder_path,
+    get_current_project_name,
+)
 
 from .actor import Actor
 from .server_settings import get_server_settings, get_settings_overrides
 
 
 # TODO separate get current casting and get asset casting (where you can choose the asset)
-def get_casting(context: dict) -> dict:
-    # TODO get entity id
-    # TODO use folder instead of id
-    entity_id = "TODO"
+def get_casting() -> dict:
+    # Get zou entity
+    zou_entity = gazu.entity.get_entity(
+        get_folder_by_path(
+            get_current_project_name, get_current_folder_path
+        )["data"]["kitsuId"]
+    )
 
-    entity = gazu.get_entity(entity_id)
+    assert zou_entity, "Kitsu entity not found."
 
-    assert entity, "Kitsu entity not found."
-
-    # TODO get entity type
-    entity_type = "asset"
+    # FIX THIS
+    entity_type = gazu.entity.get_entity_type(zou_entity["entity_type_id"])
 
     casting = None
     if entity_type == "asset":
-        casting = gazu.casting.get_asset_casting(entity)
+        casting = gazu.casting.get_asset_casting(zou_entity)
     elif entity_type == "shot":
-        casting = gazu.casting.get_shot_casting(entity)
+        casting = gazu.casting.get_shot_casting(zou_entity)
     else:
         raise RuntimeError(f"{entity_type} is not a recognized entity type.")
 

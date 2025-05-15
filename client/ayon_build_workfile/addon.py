@@ -29,10 +29,8 @@ class BuildWorkfileAddon(AYONAddon):
         Args:
             local_overrides (dict): Local settings overrides. Defaults to None.
         """
-        context = get_current_context()
-
         # Resolve casting
-        casting = get_casting(context)
+        casting = get_casting()
 
         server_settings = get_server_settings()
 
@@ -43,4 +41,4 @@ class BuildWorkfileAddon(AYONAddon):
         )
 
         for actor in casting:
-            actor.build(context)
+            actor.build(get_current_context())
