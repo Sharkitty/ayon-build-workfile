@@ -16,6 +16,7 @@ class SettingsExceptionsModel(BaseSettingsModel):
     task_types: list[rstring] = SettingsField(
         title="Task Types", default_factory=list
     )
+    loader_regex: rstring = SettingsField(r"", title="Loader")
     use_other_task_workfile: bool = SettingsField(
         False, title="Use Other Task Workfile"
     )
