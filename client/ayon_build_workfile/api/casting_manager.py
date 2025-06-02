@@ -15,7 +15,7 @@ def get_casting() -> dict:
     # Get zou entity
     zou_entity = gazu.entity.get_entity(
         get_folder_by_path(
-            get_current_project_name, get_current_folder_path
+            get_current_project_name(), get_current_folder_path()
         )["data"]["kitsuId"]
     )
 

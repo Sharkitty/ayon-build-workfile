@@ -1,10 +1,13 @@
+from ayon_core.settings.lib import get_project_settings
+from ayon_core.pipeline.context_tools import get_current_project_name
+
 def get_server_settings() -> dict:
     """Get server settings as is.
 
     Returns:
         dict: Server settings.
     """
-    pass
+    return get_project_settings(get_current_project_name())
 
 
 def get_main_settings(server_settings: dict = None) -> dict:
@@ -19,7 +22,7 @@ def get_main_settings(server_settings: dict = None) -> dict:
     if not server_settings:
         server_settings = get_server_settings()
 
-    # TODO
+    return server_settings["main_settings"]
 
 
 def get_settings_exceptions(server_settings: dict = None) -> dict:
@@ -34,7 +37,7 @@ def get_settings_exceptions(server_settings: dict = None) -> dict:
     if not server_settings:
         server_settings = get_server_settings()
 
-    # TODO
+    return server_settings["settings_exceptions"]
 
 
 def get_settings_overrides() -> dict:
