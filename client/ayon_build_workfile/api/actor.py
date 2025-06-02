@@ -1,4 +1,6 @@
-from ayon_core.pipeline.load.utils import get_loaders_by_name
+import re
+
+from ayon_core.pipeline.load import discover_loader_plugins, switch_container
 
 from .settings_manager import (
     get_server_settings,
@@ -12,14 +14,14 @@ class Actor:
     # Or loader class?
     loader: type = None
     # type: reference to a product
-    product_reference = None
+    container = None
 
     def __init__(
         self,
         actor: dict,
         server_settings: dict = None,
         settings_overrides: dict = None,
-        product_reference = None,
+        container = None,
     ):
         self.product_name = actor.get("name")
         self.product_type = actor.get("asset_type_name")
@@ -27,7 +29,6 @@ class Actor:
         main_settings = get_main_settings(server_settings)
         settings_exceptions = get_settings_exceptions(server_settings)
 
-        loaders = get_loaders_by_name()
         loader_regex = None
         if (
             settings_overrides
@@ -44,7 +45,12 @@ class Actor:
         else:
             loader_regex = main_settings.get("loader_regex")
 
-        self.product_reference = product_reference
+        for loader in discover_loader_plugins():
+            if re.match(loader_regex, loader.__name__):
+                self.loader = loader
+                break
+
+        self.container = container
 
     def __init__(
         self,
@@ -52,7 +58,7 @@ class Actor:
         main_settings: dict,
         settings_exceptions: dict,
         settings_overrides: dict = None,
-        product_reference = None,
+        container = None,
     ):
         self.product_name = actor.get("name")
         self.product_type = actor.get("asset_type_name")
@@ -74,7 +80,12 @@ class Actor:
         else:
             loader_regex = main_settings.get("loader_regex")
 
-        self.product_reference = product_reference
+        for loader in discover_loader_plugins():
+            if re.match(loader_regex, loader.__name__):
+                self.loader = loader
+                break
+
+        self.container = container
 
     def __init__(
         self,
@@ -82,7 +93,7 @@ class Actor:
         product_type: string,
         server_settings: dict = None,
         settings_overrides: dict = None,
-        product_reference = None,
+        container = None,
     ):
         self.product_name = product_name
         self.product_type = product_type
@@ -107,7 +118,12 @@ class Actor:
         else:
             loader_regex = main_settings.get("loader_regex")
 
-        self.product_reference = product_reference
+        for loader in discover_loader_plugins():
+            if re.match(loader_regex, loader.__name__):
+                self.loader = loader
+                break
+
+        self.container = container
 
     def __init__(
         self,
@@ -116,7 +132,7 @@ class Actor:
         main_settings: dict,
         settings_exceptions: dict,
         settings_overrides: dict = None,
-        product_reference = None,
+        container = None,
     ):
         self.product_name = product_name
         self.product_type = product_type
@@ -138,12 +154,21 @@ class Actor:
         else:
             loader_regex = main_settings.get("loader_regex")
 
-        self.product_reference = product_reference
+        for loader in discover_loader_plugins():
+            if re.match(loader_regex, loader.__name__):
+                self.loader = loader
+                break
+
+        self.container = container
 
     def build(self, context):
-        if product_reference:
+        if self.container:
             # switch product
-            pass
+            switch_container(
+                self.container,
+                self.container.get("representation"),
+                loader_plugin=self.loader,
+            )
         else:
             # load product
             self.loader.load(context)

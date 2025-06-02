@@ -3,6 +3,7 @@ from ayon_api import get_folder_by_path
 from ayon_core.pipeline.context_tools import (
     get_current_folder_path,
     get_current_project_name,
+    registered_host,
 )
 
 from .actor import Actor
@@ -20,7 +21,6 @@ def get_casting() -> dict:
 
     assert zou_entity, "Kitsu entity not found."
 
-    # FIX THIS
     entity_type = gazu.entity.get_entity_type(zou_entity["entity_type_id"])
 
     casting = None
@@ -36,14 +36,22 @@ def get_casting() -> dict:
     actors = []
     server_settings = get_server_settings()
     settings_overrides = get_settings_overrides()
+
+    host = registered_host()
+    containers = host.get_containers()
+
     for actor in casting:
-        product_reference = None
+        # Get loaded container
+        container = None
+        for c in containers:
+            if actor.get("name") == c.get("representation", {}).get("name"):
+                container = c
 
-        # TODO find if actor exists in scene
-
-        # TODO create new Actor object and append it to `actors`
         actors.append(
-            Actor(actor, server_settings, settings_overrides)
+            Actor(actor, server_settings, settings_overrides, container=container)
         )
+
+        # Remove container from list, so we can account for product and actor amounts
+        containers.pop(container)
 
     return actors
