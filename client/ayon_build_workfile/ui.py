@@ -1,5 +1,7 @@
-from qtpy import QtWidgets, QtCore
+from qtpy import Qt, QtWidgets, QtCore
 from ayon_core.addon.base import AddonsManager
+from ayon_core.pipeline.load import get_loaders_by_name
+from ayon_core.pipeline.context_tools import get_current_context
 
 from .api.casting_manager import get_casting
 
@@ -30,8 +32,11 @@ class OverridesDialog(QtWidgets.QDialog):
 
         casting = get_casting()
 
+        self._vbox = QtWidgets.QVBoxLayout(self)
+
+        self._actor_widgets = []
         for actor in casting:
-            pass
+            self._actor_widgets.append(ActorWidget(actor, self._vbox))
 
 
 class CastingLoadingDialog(QtWidgets.QDialog):
@@ -58,7 +63,13 @@ class ActorWidget(QtWidgets.QWidget):
         self._product_type_label.setText(actor.get("product_type", ""))
 
         self._loader_combobox = QtWidgets.QComboBox(self._hbox)
-        # TODO get possible loaders list
+        self._loader_combobox.setCurrentText(actor.loader.__name__)
+
+        context = get_current_context()
+        for loader in get_loaders_by_name():
+            # TODO Unsure if that check is sufficient
+            if loader.is_compatible_loader(context):
+                self._loader_combobox.addItem(loader.__name__)
 
         self._container_label = QtWidgets.QComboBox(self._hbox)
         self._container_label.setText(actor.get("container"))
@@ -73,6 +84,14 @@ class ErrorDialog(QtWidgets.QDialog):
         self._error_widget = QtWidgets.QLabel(self)
         self._error_widget.setText(error)
 
-        self._hbox = QtWidgets.QHBoxLayout(self)
-        # copy to clipboard button
-        # ok button
+        self._button_box = QtWidgets.QDialogButtonBox(self)
+        # TODO find how the first arg is supposed to work
+        # TODO find how to connect the newly created button
+        self._button_box.addButton(
+            copyToClipBoardButton, QtWidgets.QDialogButtonBox.ActionRole
+        )
+
+        self._button_box.accepted.connect(self.accept)
+
+    def copy_to_clipboard(self):
+        QtWidgets.QApplication.clipboard().setText(self._error_widget.text())

@@ -1,6 +1,6 @@
 import re
 
-from ayon_core.pipeline.load import discover_loader_plugins, switch_container
+from ayon_core.pipeline.load import get_loaders_by_name, switch_container
 
 from .settings_manager import (
     get_server_settings,
@@ -118,7 +118,7 @@ class Actor:
         else:
             loader_regex = main_settings.get("loader_regex")
 
-        for loader in discover_loader_plugins():
+        for loader in loaders:
             if re.match(loader_regex, loader.__name__):
                 self.loader = loader
                 break
