@@ -2,6 +2,7 @@ import asyncio
 
 from ayon_core.addon import AYONAddon
 from ayon_core.pipeline.context_tools import get_current_context
+import ayon_harmony.api as harmony
 
 from .version import __version__
 from .api.casting_manager import get_casting
@@ -19,9 +20,13 @@ class BuildWorkfileAddon(AYONAddon):
     name = "build_workfile"
     version = __version__
 
-    def initialize(self, settings):
+    def __init__(self):
         """Initialization of addon."""
-        pass
+        harmony.send(
+            {
+                "function": "ayon_build_workfile.hosts.harmony.ui.addButton"
+            }
+        )
 
     def build_workfile(self, local_overrides: dict = None):
         """Build current workfile.

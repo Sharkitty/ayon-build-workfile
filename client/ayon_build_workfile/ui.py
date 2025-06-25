@@ -95,3 +95,7 @@ class ErrorDialog(QtWidgets.QDialog):
 
     def copy_to_clipboard(self):
         QtWidgets.QApplication.clipboard().setText(self._error_widget.text())
+
+
+def show():
+    BuildDialog(None)
