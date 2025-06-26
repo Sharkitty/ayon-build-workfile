@@ -1,12 +1,12 @@
 # Required: lower case addon name e.g. 'deadline', otherwise addon
 #   will be invalid
-name = ""
+name = "build-workfile"
 
 # Optional: Addon title shown in UI, 'name' is used by default e.g. 'Deadline'
-title = ""
+title = "Build Workfile"
 
 # Required: Valid semantic version (https://semver.org/)
-version = "0.0.0"
+version = "0.0.1"
 
 # Name of client code directory imported in AYON launcher
 # - do not specify if there is no client code
