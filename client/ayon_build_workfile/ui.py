@@ -1,4 +1,4 @@
-from qtpy import Qt, QtWidgets, QtCore
+from qtpy import QtWidgets, QtCore
 from ayon_core.addon.base import AddonsManager
 from ayon_core.pipeline.load import get_loaders_by_name
 from ayon_core.pipeline.context_tools import get_current_context

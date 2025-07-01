@@ -10,4 +10,5 @@ class BuildWorkfileAddon(BaseServerAddon):
 
     async def get_default_settings(self):
         settings_model_cls = self.get_settings_model()
+        # FIX ME default values can't be None
         return settings_model_cls(**DEFAULT_VALUES)

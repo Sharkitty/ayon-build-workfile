@@ -13,13 +13,16 @@ version = "0.0.1"
 client_dir = None
 
 # Version compatibility with AYON server
-# ayon_server_version = ">=1.0.7"
+ayon_server_version = ">=1.9"
 # Version compatibility with AYON launcher
-# ayon_launcher_version = ">=1.0.2"
+ayon_launcher_version = ">=1.1.1"
 
 # Mapping of addon name to version requirements
 # - addon with specified version range must exist to be able to use this addon
 ayon_required_addons = {}
 # Mapping of addon name to version requirements
 # - if addon is used in same bundle the version range must be valid
-ayon_compatible_addons = {}
+ayon_compatible_addons = {
+    "blender": ">=0.2.8",
+    "harmony": ">=0.4.1",
+}
