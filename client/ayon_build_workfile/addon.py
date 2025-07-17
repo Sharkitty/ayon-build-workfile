@@ -1,9 +1,13 @@
+import os
+
 from ayon_core.addon import AYONAddon
 from ayon_core.pipeline.context_tools import get_current_context
-import ayon_harmony.api as harmony
 
 from .version import __version__
 from .api.casting_manager import get_casting
+
+# TODO - use pathlib
+BUILD_WORKFILE_ADDON_ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class BuildWorkfileAddon(AYONAddon):
@@ -13,13 +17,12 @@ class BuildWorkfileAddon(AYONAddon):
     name = "build_workfile"
     version = __version__
 
-    def __init__(self):
+    def initialize(self, settings):
         """Initialization of addon."""
-        harmony.send(
-            {
-                "function": "ayon_build_workfile.hosts.harmony.ui.addButton"
-            }
-        )
+        pass
+
+    def get_launch_hook_paths(self, app):
+        return [os.path.join(BUILD_WORKFILE_ADDON_ROOT_DIR, "hooks")]
 
     def build_workfile(self, local_overrides: dict = None):
         """Build current workfile.

@@ -9,8 +9,8 @@ from .settings_manager import (
 )
 
 class Actor:
-    product_name: string = None
-    product_type: string = None
+    product_name: str = None
+    product_type: str = None
     # Or loader class?
     loader: type = None
     # type: reference to a product
@@ -38,7 +38,7 @@ class Actor:
             loader_regex = settings_overrides.get("loader_regex")
         elif (
             settings_exceptions
-            and self.product_name in settings_exceptions.get("entity_names". [])
+            and self.product_name in settings_exceptions.get("entity_names", [])
             and settings_exceptions.get("loader_regex")
         ):
             loader_regex = settings_exceptions.get("loader_regex")
@@ -73,7 +73,7 @@ class Actor:
             loader_regex = settings_overrides.get("loader_regex")
         elif (
             settings_exceptions
-            and self.product_name in settings_exceptions.get("entity_names". [])
+            and self.product_name in settings_exceptions.get("entity_names", [])
             and settings_exceptions.get("loader_regex")
         ):
             loader_regex = settings_exceptions.get("loader_regex")
@@ -89,8 +89,8 @@ class Actor:
 
     def __init__(
         self,
-        product_name: string,
-        product_type: string,
+        product_name: str,
+        product_type: str,
         server_settings: dict = None,
         settings_overrides: dict = None,
         container = None,
@@ -111,7 +111,7 @@ class Actor:
             loader_regex = settings_overrides.get("loader_regex")
         elif (
             settings_exceptions
-            and self.product_name in settings_exceptions.get("entity_names". [])
+            and self.product_name in settings_exceptions.get("entity_names", [])
             and settings_exceptions.get("loader_regex")
         ):
             loader_regex = settings_exceptions.get("loader_regex")
@@ -127,8 +127,8 @@ class Actor:
 
     def __init__(
         self,
-        product_name: string,
-        product_type: string,
+        product_name: str,
+        product_type: str,
         main_settings: dict,
         settings_exceptions: dict,
         settings_overrides: dict = None,
@@ -147,7 +147,7 @@ class Actor:
             loader_regex = settings_overrides.get("loader_regex")
         elif (
             settings_exceptions
-            and self.product_name in settings_exceptions.get("entity_names". [])
+            and self.product_name in settings_exceptions.get("entity_names", [])
             and settings_exceptions.get("loader_regex")
         ):
             loader_regex = settings_exceptions.get("loader_regex")

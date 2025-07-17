@@ -7,7 +7,7 @@ from ayon_core.pipeline.context_tools import (
 )
 
 from .actor import Actor
-from .server_settings import get_server_settings, get_settings_overrides
+from .settings_manager import get_server_settings, get_settings_overrides
 
 
 # TODO separate get current casting and get asset casting (where you can choose the asset)
